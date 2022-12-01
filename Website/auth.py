@@ -8,7 +8,7 @@ def login():
 
     return render_template("login.html")
 
-@auth.route('/registration')
+@auth.route('/registration', methods=['GET', 'POST'])
 
 def registration():
 
