@@ -8,3 +8,8 @@ def login():
 
     return render_template("login.html")
 
+@auth.route('/registration')
+
+def registration():
+
+    return render_template("registration.html")
