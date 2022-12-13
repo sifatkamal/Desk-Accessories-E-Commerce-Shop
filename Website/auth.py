@@ -225,5 +225,32 @@ def add_product():
     return render_template("add_product.html", user=current_user)
 
 
+@auth.route('/product_list')
+
+def product_list():
+
+    add_product = Add_Product.query.all()
+
+    return render_template("product_list.html", user=current_user, add_product = add_product)
+
+
+
+@auth.route('/<int:idd>/delete', methods=['GET','POST'])
+
+def delete(idd):
+
+    product = Add_Product.query.filter_by(idd=idd).first()
+
+    if request.method == 'POST':
+
+        if product:
+
+            db.session.delete(product)
+
+            db.session.commit()
+
+            return redirect(url_for('auth.product_list'))
+
+    return render_template('delete.html', user=current_user)
 
 
