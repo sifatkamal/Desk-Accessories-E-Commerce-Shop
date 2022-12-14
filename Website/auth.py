@@ -135,7 +135,7 @@ def category():
 
 def checkout():
 
-    return render_template("checkout.html")
+    return render_template("checkout.html", user=current_user)
 
 @auth.route('/confirmation')
 
