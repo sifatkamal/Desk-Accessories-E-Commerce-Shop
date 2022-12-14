@@ -234,6 +234,39 @@ def product_list():
     return render_template("product_list.html", user=current_user, add_product = add_product)
 
 
+@auth.route('/<int:idd>/edit',methods = ['GET','POST'])
+
+def update(idd):
+
+    product = Add_Product.query.filter_by(idd=idd).first()
+
+    if request.method == 'POST':
+
+        if product:
+
+            db.session.delete(product)
+            
+            db.session.commit()
+
+        title = request.form['title']
+
+        price = request.form['price']
+
+        product = Add_Product(
+            
+            title = title,
+            
+            price = price,
+        )
+
+        db.session.add(product)
+        
+        db.session.commit()
+        
+        return redirect(url_for('auth.product_list'))
+        
+        
+    return render_template('add_product.html', product = product, user=current_user)
 
 @auth.route('/<int:idd>/delete', methods=['GET','POST'])
 
@@ -252,5 +285,34 @@ def delete(idd):
             return redirect(url_for('auth.product_list'))
 
     return render_template('delete.html', user=current_user)
+
+@auth.route('/<int:id>/delete_user', methods=['GET','POST'])
+
+def delete_user(id):
+
+    userr = User.query.filter_by(id=id).first()
+
+    if request.method == 'POST':
+
+        if userr:
+
+            db.session.delete(userr)
+
+            db.session.commit()
+
+            return redirect(url_for('auth.user_list'))
+
+    return render_template('delete_user.html', user=current_user)
+
+@auth.route('/user_list')
+
+def user_list():
+
+    userr = User.query.all()
+
+    return render_template("user_list.html", user=current_user, userr = userr)
+
+
+
 
 
