@@ -2892,6 +2892,19 @@ ul {
   transition: 0.5s;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* line 93, ../../01 cl html template/03_jun 2019/188_Aranoz shop_html/sass/_product_list.scss */
 .single_product_item .single_product_text a i {
   float: right;
@@ -2899,6 +2912,11 @@ ul {
   line-height: 26px;
   color: #000;
 }
+
+
+
+
+
 
 /* line 102, ../../01 cl html template/03_jun 2019/188_Aranoz shop_html/sass/_product_list.scss */
 .single_product_item:hover {
@@ -2911,10 +2929,18 @@ ul {
 }
 
 /* line 109, ../../01 cl html template/03_jun 2019/188_Aranoz shop_html/sass/_product_list.scss */
-.single_product_item:hover a {
+ .single_product_item:hover a {
   opacity: 1;
   visibility: visible;
 }
+
+
+
+
+
+
+
+
 
 /************* our offer *****************/
 /* line 2, ../../01 cl html template/03_jun 2019/188_Aranoz shop_html/sass/_our_offer.scss */

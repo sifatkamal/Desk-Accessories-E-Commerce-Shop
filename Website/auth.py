@@ -117,9 +117,22 @@ def registration():
 
     return render_template("registration.html", user=current_user)
 
-@auth.route('/cart')
+@auth.route('/cart', methods = ['POST'])
 
 def cart():
+
+    product_id = request.form.get('product_id')
+
+    product_title = request.form.get('product_id')
+
+    price = request.form.get('product_price')
+
+    product = Add_Product.query.filter_by(id = product_id).first()
+
+    
+
+
+
 
     return render_template("cart.html", user=current_user)
 
@@ -175,11 +188,13 @@ def elements():
 
     return render_template("elements.html")
 
-@auth.route('/single_product')
+@auth.route('/single_product/<int:idd>')
 
-def single_product():
+def single_product(idd):
 
-    return render_template("single_product.html", user=current_user)
+    product = Add_Product.query.get_or_404(idd)
+
+    return render_template("single_product.html", user=current_user, product = product)
 
 @auth.route('/tracking')
 

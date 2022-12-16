@@ -28,47 +28,57 @@
         <div class="col-lg-7 col-xl-7">
           <div class="product_slider_img">
             <div id="vertical">
-              <div data-thumb="img/product/single-product/product_1.png">
-                <img src="img/product/single-product/product_1.png" />
+              <div data-thumb="{{ url_for('static', filename='img/product/single-product/product_1.png') }}">
+                <img src="{{ url_for('static', filename='img/product/single-product/product_1.png') }}" alt="">
+                
               </div>
-              <div data-thumb="img/product/single-product/product_1.png">
-                <img src="img/product/single-product/product_1.png" />
-              </div>
-              <div data-thumb="img/product/single-product/product_1.png">
-                <img src="img/product/single-product/product_1.png" />
-              </div>
-              <div data-thumb="img/product/single-product/product_1.png">
-                <img src="img/product/single-product/product_1.png" />
-              </div>
+
             </div>
           </div>
         </div>
         <div class="col-lg-5 col-xl-4">
           <div class="s_product_text">
             <h5>previous <span>|</span> next</h5>
-            <h3>Faded SkyBlu Denim Jeans</h3>
-            <h2>$149.99</h2>
+            <h3>{{product.title}}</h3>
+            <h2>${{product.price}}</h2>
             <ul class="list">
-              <li>
-                <a class="active" href="#">
-                  <span>Category</span> : Household</a>
-              </li>
+
               <li>
                 <a href="#"> <span>Availibility</span> : In Stock</a>
               </li>
             </ul>
+
             <p>
-              First replenish living. Creepeth image image. Creeping can't, won't called.
-              Two fruitful let days signs sea together all land fly subdue
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+              Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
             </p>
             <div class="card_area d-flex justify-content-between align-items-center">
-              <div class="product_count">
+              <!-- <div class="product_count">
                 <span class="inumber-decrement"> <i class="ti-minus"></i></span>
                 <input class="input-number" type="text" value="1" min="0" max="10">
                 <span class="number-increment"> <i class="ti-plus"></i></span>
-              </div>
-              <a href="#" class="btn_3">add to cart</a>
-              <a href="#" class="like_us"> <i class="ti-heart"></i> </a>
+              </div> -->
+
+              <form action = "{{url_for('auth.cart')}}" method="post">
+
+                <input type="hidden" name = "product_id" value = {{product.idd}}>
+
+                <input type="hidden" name = "product_title" value = {{product.title}}>
+
+                <input type="hidden" name = "product_price" value = {{product.price}}>
+
+                <button type="submit" class="btn_3">add to cart</button>
+
+
+
+
+
+              </form>
+
+              <!-- <a href="#" class="btn_3">add to cart</a> -->
+
+              
+              <!-- <a href="#" class="like_us"> <i class="ti-heart"></i> </a> -->
             </div>
           </div>
         </div>
