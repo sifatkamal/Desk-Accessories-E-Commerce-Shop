@@ -116,20 +116,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </head>
 
 
@@ -206,6 +192,17 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="logout">Logout</a>
                                 </li>
+
+                                    {% if user.id == 9 %}
+
+                                    <li class="nav-item">
+                                      <a class="nav-link" href="admin">Admin</a>
+                                    </li>
+
+                                    {% endif %}
+
+                                    
+
 
                                 {% else %}
 

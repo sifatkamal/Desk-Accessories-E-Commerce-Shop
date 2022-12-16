@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 
-from .models import User, Contact, Add_Product
+from .models import User, Contact, Add_Product, Cart
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -75,7 +75,7 @@ def registration():
 
             flash('Already exist account with this email', category='error')
 
-        elif len(email) == 0 or len(first_name) == 0 or len(last_name) == 0 or len(password1) == 0 or len(password2) == 0:
+        elif len(email) == 0 or len(first_name) == 0 or len(password1) == 0 or len(password2) == 0:
 
             flash('Information missing', category='error')
 
@@ -117,24 +117,23 @@ def registration():
 
     return render_template("registration.html", user=current_user)
 
-@auth.route('/cart', methods = ['POST'])
+@auth.route('/cart', methods = ['GET', 'POST'])
 
 def cart():
 
-    product_id = request.form.get('product_id')
-
-    product_title = request.form.get('product_id')
-
-    price = request.form.get('product_price')
-
-    product = Add_Product.query.filter_by(id = product_id).first()
-
+    # product = Add_Product.query.filter_by(id = product_id).first()
     
+    # product = Cart(product_title = product_title, product_price = product_price)
 
+    # db.session.add(product)
 
+    # db.session.commit()
 
+    # product = Add_Product.query.all()
 
-    return render_template("cart.html", user=current_user)
+    products = Cart.query.all()
+
+    return render_template("cart.html", user=current_user, products=products)
 
 @auth.route('/category')
 
@@ -188,11 +187,25 @@ def elements():
 
     return render_template("elements.html")
 
-@auth.route('/single_product/<int:idd>')
+@auth.route('/single_product/<int:idd>', methods = ['GET', 'POST'])
 
 def single_product(idd):
 
     product = Add_Product.query.get_or_404(idd)
+
+    if request.method == 'POST':
+
+        # product_id = request.form.get('product_id')
+
+        product_title = request.form.get('product_title')
+
+        product_price = request.form.get('product_price')
+
+        entry = Cart(product_title = product_title, product_price = product_price)
+
+        db.session.add(entry)
+
+        db.session.commit()
 
     return render_template("single_product.html", user=current_user, product = product)
 
@@ -204,9 +217,21 @@ def tracking():
 
 @auth.route('/admin')
 
+@login_required
+
 def admin():
 
-    return render_template("admin.html", user=current_user)
+    id = current_user.id
+
+    if id == 9:
+
+        return render_template("admin.html", user=current_user)
+
+    else:
+
+        flash("You've no permission to access!!")
+
+        return redirect(url_for('auth.login'))
 
 @auth.route('/contact_messages', methods = ['GET'])
 
@@ -218,6 +243,8 @@ def retriveList():
 
 
 @auth.route('/add_product', methods = ['GET', 'POST'])
+
+@login_required
 
 def add_product():
 
@@ -242,6 +269,8 @@ def add_product():
 
 @auth.route('/product_list')
 
+@login_required
+
 def product_list():
 
     add_product = Add_Product.query.all()
@@ -250,6 +279,8 @@ def product_list():
 
 
 @auth.route('/<int:idd>/edit',methods = ['GET','POST'])
+
+@login_required
 
 def update(idd):
 
@@ -285,6 +316,8 @@ def update(idd):
 
 @auth.route('/<int:idd>/delete', methods=['GET','POST'])
 
+@login_required
+
 def delete(idd):
 
     product = Add_Product.query.filter_by(idd=idd).first()
@@ -303,6 +336,8 @@ def delete(idd):
 
 @auth.route('/<int:id>/delete_user', methods=['GET','POST'])
 
+@login_required
+
 def delete_user(id):
 
     userr = User.query.filter_by(id=id).first()
@@ -320,6 +355,8 @@ def delete_user(id):
     return render_template('delete_user.html', user=current_user)
 
 @auth.route('/user_list')
+
+@login_required
 
 def user_list():
 
