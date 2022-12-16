@@ -2,43 +2,36 @@
 
 {% block content %}
 
-
-
 <div class="container" style="padding-top: 90px;">
 
-    
+  <table class="table" style="border-collapse: collapse;">
+     
+    <tr style="background-color: brown;color: aliceblue;">
+ 
+         <th>Messages</th>
+         <th>Name</th>
+         <th>Email</th>
+         <th>Subject</th>
+ 
+    </tr>
 
- <table class="table">
     
-     <thead style="background-color: brown;color: aliceblue;">
-        <th>Message</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Subject</th>
-    </thead>
+ 
+    <tr>
 
-   <tbody>
     {% for msg in contact %}
-    <!-- <tr
-    {% if loop.index %2==0 %}
-    style="background-color: rgb(255, 217, 247);"
-    {% else %}
-    style="background-color: rgb(248, 169, 231);"
-    {% endif %}> -->
+
 
     <td>{{msg.message}}</td>
     <td>{{msg.name}}</td>
     <td>{{msg.email}}</td>
     <td>{{msg.subject}}</td>
 
-     <!-- <td> <span style="font-size: 24px;color:green;">
-       <a href="/{{student.id}}/edit"> <i class="fas fa-edit"></i></a> </span>
-        | <span style="font-size: 24px;color:red;">  
-          <a href="/{{student.id}}/delete"> <i class="fas fa-trash-alt"></i></a></span></td> -->
-          
+    </tr>
+
     {% endfor %}
-   </tbody>
- </table>
+
+  </table>
   
 </div>
 
