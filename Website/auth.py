@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 
-from .models import User, Contact, Add_Product, Cart
+from .models import User, Contact, Add_Productt, Cart
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -121,25 +121,39 @@ def registration():
 
 def cart():
 
-    # product = Add_Product.query.filter_by(id = product_id).first()
-    
-    # product = Cart(product_title = product_title, product_price = product_price)
+    subtotal = 0
 
-    # db.session.add(product)
+    grand_total = 0
 
-    # db.session.commit()
+    if request.method == 'POST':
 
-    # product = Add_Product.query.all()
+        product_title = request.form.get('product_title')
+
+        product_price = request.form.get('product_price')
+
+        entry = Cart(title = product_title, price = product_price)
+
+        db.session.add(entry)
+
+        db.session.commit()
+
+        temp = float(product_price)
+
+        count = temp + subtotal
+
+        subtotal = count
+
+        grand_total = subtotal + 5    
 
     products = Cart.query.all()
 
-    return render_template("cart.html", user=current_user, products=products)
+    return render_template("cart.html", user=current_user, products=products, subtotal = subtotal, grand_total = grand_total)
 
 @auth.route('/category')
 
 def category():
 
-    add_product = Add_Product.query.all()
+    add_product = Add_Productt.query.all()
 
     return render_template("category.html", user=current_user, add_product = add_product)
 
@@ -191,21 +205,7 @@ def elements():
 
 def single_product(idd):
 
-    product = Add_Product.query.get_or_404(idd)
-
-    if request.method == 'POST':
-
-        # product_id = request.form.get('product_id')
-
-        product_title = request.form.get('product_title')
-
-        product_price = request.form.get('product_price')
-
-        entry = Cart(product_title = product_title, product_price = product_price)
-
-        db.session.add(entry)
-
-        db.session.commit()
+    product = Add_Productt.query.get_or_404(idd)
 
     return render_template("single_product.html", user=current_user, product = product)
 
@@ -254,7 +254,11 @@ def add_product():
 
         price = request.form.get('price')
 
-        entry = Add_Product(title=title, price = price)
+        description = request.form.get('description')
+
+        quantity = request.form.get('quantity')
+
+        entry = Add_Productt(title=title, price = price, description = description, quantity = quantity)
 
         db.session.add(entry)
 
@@ -273,7 +277,7 @@ def add_product():
 
 def product_list():
 
-    add_product = Add_Product.query.all()
+    add_product = Add_Productt.query.all()
 
     return render_template("product_list.html", user=current_user, add_product = add_product)
 
@@ -284,7 +288,7 @@ def product_list():
 
 def update(idd):
 
-    product = Add_Product.query.filter_by(idd=idd).first()
+    product = Add_Productt.query.filter_by(idd=idd).first()
 
     if request.method == 'POST':
 
@@ -298,7 +302,7 @@ def update(idd):
 
         price = request.form['price']
 
-        product = Add_Product(
+        product = Add_Productt(
             
             title = title,
             
@@ -320,7 +324,7 @@ def update(idd):
 
 def delete(idd):
 
-    product = Add_Product.query.filter_by(idd=idd).first()
+    product = Add_Productt.query.filter_by(idd=idd).first()
 
     if request.method == 'POST':
 
@@ -368,3 +372,36 @@ def user_list():
 
 
 
+@auth.route('/<int:serial>/delete_cart', methods=['GET','POST'])
+
+@login_required
+
+def delete_cart(serial):
+
+    product = Cart.query.filter_by(serial=serial).first()
+
+    if request.method == 'POST':
+
+        if product:
+
+            db.session.delete(product)
+
+            db.session.commit()
+
+            return redirect(url_for('auth.cart'))
+
+    return render_template('delete_cart.html', user=current_user)
+
+
+
+@auth.route('/search', methods=['GET', 'POST'])
+
+def search():
+
+    if request.method == 'POST':
+
+        searched = request.form.get('searched')
+
+        add_product = Add_Productt.query.all()
+
+        return render_template("search.html", user=current_user, add_product = add_product, searched = searched)  

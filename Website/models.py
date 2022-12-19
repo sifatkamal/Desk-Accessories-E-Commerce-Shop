@@ -26,24 +26,23 @@ class Contact(db.Model):
 
     subject = db.Column(db.String(150))
 
-class Add_Product(db.Model):
+class Add_Productt(db.Model):
 
     idd = db.Column(db.Integer, primary_key = True)
 
     title = db.Column(db.String(200))
 
-    price = db.Column(db.String(20))
+    price = db.Column(db.Float(20))
+
+    description = db.Column(db.String(2000))
+
+    quantity = db.Column(db.Integer)
 
 class Cart(db.Model):
 
-    idd = db.Column(db.Integer, primary_key = True)
+    serial = db.Column(db.Integer, primary_key = True)
 
     title = db.Column(db.String(200))
 
-    price = db.Column(db.String(20))
-
-
-
-
-
+    price = db.Column(db.Float(9999999999))
 
