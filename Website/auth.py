@@ -8,6 +8,8 @@ from . import db
 
 from flask_login import login_user, login_required, logout_user, current_user
 
+from sqlalchemy.sql import func
+
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -117,13 +119,12 @@ def registration():
 
     return render_template("registration.html", user=current_user)
 
+
+
 @auth.route('/cart', methods = ['GET', 'POST'])
 
 def cart():
 
-    subtotal = 0
-
-    grand_total = 0
 
     if request.method == 'POST':
 
@@ -137,17 +138,17 @@ def cart():
 
         db.session.commit()
 
-        temp = float(product_price)
-
-        count = temp + subtotal
-
-        subtotal = count
-
-        grand_total = subtotal + 5    
-
     products = Cart.query.all()
 
-    return render_template("cart.html", user=current_user, products=products, subtotal = subtotal, grand_total = grand_total)
+    xyz = db.session.query(func.sum(Cart.price)).all()
+
+    xyz = xyz[0][0]
+
+    if xyz == None:
+
+        xyz = 0
+
+    return render_template("cart.html", user=current_user, products=products, subtotal = xyz, grand_total = xyz+5)
 
 @auth.route('/category')
 
@@ -163,7 +164,7 @@ def checkout():
 
     cart = Cart.query.all()
 
-    return render_template("checkout.html", user=current_user, cart = cart, )
+    return render_template("checkout.html", user=current_user, cart = cart)
 
 @auth.route('/confirmation')
 
