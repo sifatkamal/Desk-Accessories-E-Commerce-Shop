@@ -10,7 +10,7 @@
         <div class="col-lg-8">
           <div class="breadcrumb_iner">
             <div class="breadcrumb_iner_item">
-              <h2>Producta Checkout</h2>
+              <h2>Product Checkout</h2>
               <p>Home <span>-</span> Shop Single</p>
             </div>
           </div>
@@ -45,24 +45,19 @@
                     <span>Total</span>
                   </a>
                 </li>
+
+                {% for i in cart %}
+
+
                 <li>
-                  <a href="#">Fresh Blackberry
-                    <span class="middle">x 02</span>
-                    <span class="last">$720.00</span>
+                  <a href="#">{{i.title}}
+                    <span class="last">${{i.price}}</span>
                   </a>
                 </li>
-                <li>
-                  <a href="#">Fresh Tomatoes
-                    <span class="middle">x 02</span>
-                    <span class="last">$720.00</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">Fresh Brocoli
-                    <span class="middle">x 02</span>
-                    <span class="last">$720.00</span>
-                  </a>
-                </li>
+
+                {% endfor %}
+
+                
               </ul>
               <ul class="list list_2">
                 <li>
@@ -72,12 +67,12 @@
                 </li>
                 <li>
                   <a href="#">Shipping
-                    <span>Flat rate: $50.00</span>
+                    <span>$5.00</span>
                   </a>
                 </li>
                 <li>
                   <a href="#">Total
-                    <span>$2210.00</span>
+                    <span>$55.00</span>
                   </a>
                 </li>
               </ul>
@@ -109,7 +104,7 @@
                 <label for="f-option4">I’ve read and accept the </label>
                 <a href="#">terms & conditions*</a>
               </div>
-              <a class="btn_3" href="#">Proceed to Paypal</a>
+              <a class="btn_3" href="#">Proceed</a>
             </div>
           </div>
         </div>

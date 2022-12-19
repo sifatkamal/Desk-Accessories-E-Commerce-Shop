@@ -161,7 +161,9 @@ def category():
 
 def checkout():
 
-    return render_template("checkout.html", user=current_user)
+    cart = Cart.query.all()
+
+    return render_template("checkout.html", user=current_user, cart = cart, )
 
 @auth.route('/confirmation')
 
@@ -313,8 +315,7 @@ def update(idd):
         
         db.session.commit()
         
-        return redirect(url_for('auth.product_list'))
-        
+        return redirect(url_for('auth.product_list'))     
         
     return render_template('add_product.html', product = product, user=current_user)
 
