@@ -119,12 +119,11 @@ def registration():
 
     return render_template("registration.html", user=current_user)
 
-
-
 @auth.route('/cart', methods = ['GET', 'POST'])
 
-def cart():
+@login_required
 
+def cart():
 
     if request.method == 'POST':
 
@@ -305,11 +304,21 @@ def update(idd):
 
         price = request.form['price']
 
+        description = request.form['description']
+
+        quantity = request.form['quantity']
+
         product = Add_Productt(
             
             title = title,
             
             price = price,
+
+            description = description,
+
+            quantity = quantity,
+
+
         )
 
         db.session.add(product)
@@ -370,10 +379,6 @@ def user_list():
 
     return render_template("user_list.html", user=current_user, userr = userr)
 
-
-
-
-
 @auth.route('/<int:serial>/delete_cart', methods=['GET','POST'])
 
 @login_required
@@ -393,8 +398,6 @@ def delete_cart(serial):
             return redirect(url_for('auth.cart'))
 
     return render_template('delete_cart.html', user=current_user)
-
-
 
 @auth.route('/search', methods=['GET', 'POST'])
 
