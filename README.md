@@ -1,0 +1,2 @@
+# Desk-Accessories-E-Commerce-Shop
+In this project, I've made a desk accessories e-commerce site where customers or users can buy desk accessories according to their preferences. The project is made with flask as a web framework and Sqlalchemy as a SQL toolkit. The admin has the ability to add new products, remove users, and read user queries. Users or customers can add products to the cart, check the cart, Remove products from the cart, add queries, and order products with PayPal or cash.
